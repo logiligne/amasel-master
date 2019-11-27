@@ -4,7 +4,7 @@
   "description": "Amasel Database Model",
   "main": "build/db-model.js",
   "dependencies": {
-    "lodash": "^3.6.0",
+    "lodash": "^4.17.15",
     "cli-table": ""
   },
   "devDependencies": {
