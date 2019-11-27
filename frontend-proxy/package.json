@@ -1,0 +1,15 @@
+{
+  "name": "amasel-proxy" ,
+  "version": "0.0.1" ,
+  "engines": ["node >= 0.12.0"] ,
+  "main": "proxy.js" ,
+  "dependencies":
+  {
+    "http-proxy": "1.9.0",
+		"connect": "3.3.4",
+		"compression": "1.4.3",
+		"morgan" : "1.5.2"
+  },
+  "devDependencies": {
+  }
+}

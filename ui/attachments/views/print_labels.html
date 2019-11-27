@@ -1,0 +1,49 @@
+
+<div class="container-fluid print-preview-dialog">
+<div class="row-fluid">
+<div class="span6">
+<!--Sidebar content-->
+	Print profile:
+	<select ui-select2 ng-model="useProfile" class="print-profile-select">
+		<option ng-repeat="(name,value) in printProfiles" value="{{name}}">{{name}}</option>
+	</select>
+
+<label class="radio">
+<input type="radio" ng-model="printType" value="page">
+Print current page
+</label>
+
+<label class="radio">
+<input type="radio" ng-model="printType" value="selected">
+Print selected only
+</label>
+
+<label class="radio">
+<input type="radio" ng-model="printType" value="all">
+Print all
+</label>
+
+</div>
+<div class="span6">
+<!--Body content-->
+Labels to skip on first page:
+<input name="skipN" ng-model="skipLabels" class="input-mini" type="number" size="3" min="1" max="30">
+<div class="print-preview-labels">
+	<button ng-repeat="l in labels"
+			 style="width: {{ labelWidthPerc }}%;"
+			 class="btn"
+			 ng-class="{'btn-inverse':$index<skipLabels,  btn:$index>=skipLabels}" 
+			 ng-click="setSkip($index)"
+			 >
+	{{ l }}
+	</button>
+</div>
+</div>
+</div>
+		<div style="height: 15px;"></div>
+<div style="text-align: right;">
+		<button ng-click="print()" class="btn btn-small btn-primary">Print</button>
+		&nbsp;&nbsp;
+		<button ng-click="close()" class="btn btn-small">Close</button>
+</div>
+</div>

@@ -1,0 +1,78 @@
+<div class="row-fluid">
+	<div class="span7">
+		<div class="input-append">
+			<input class="input-medium" placeholder="Search..." type="text" ng-model="query" >
+			<button class="btn" ng-click="query = '' "><i class="icon-remove"></i></button>
+		</div>
+		<label class="checkbox inline"><input ng-model="searchInSKU" type="checkbox">SKU</label>
+		<label class="checkbox inline"><input ng-model="searchInASIN" type="checkbox">ASIN</label>
+		<label class="checkbox inline"><input ng-model="searchInTitle" type="checkbox">Title</label>
+		<label class="checkbox inline"><input ng-model="searchActive" type="checkbox">Active only</label>
+		<label class="checkbox inline"><input ng-model="searchInactive" type="checkbox">Inactive only</label>
+	</div>
+	<div class="span2">
+	</div>
+	<div class="span3">
+		showing {{ getPage(filtered,currentPage).length }} out of {{ filtered.length }} total
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<pagination num-pages="numPages(filtered)"
+								current-page="currentPage"
+								class="pagination-mini" style="text-align: center;">
+		</pagination>
+	</div>
+</div>
+<div class="product-list">
+	<div class="row-fluid" data-ng-repeat="row in rows">
+			<div class="product-reprice span12" ng-repeat="product in getColumns(filtered,currentPage,$index)">
+				<table style="width: 100%;"><tr>
+				<td class="pr-image">
+					<div class="product-img-small" >
+				 	 <img ng-src="{{product.imageSmall}}" alt="{{product.title}}">
+					</div>
+			  </td>
+			  <td class="pr-info">
+				 ASIN: <a href="{{productURL(product.ASIN)}}" target="_blank">{{product.ASIN}}</a><br>
+				 SKU: <b>{{product.SKU}}</b><br>
+				 Price: <b>{{product.Price}}</b><br>
+				 Quantity: <b>{{product.Quantity}}</b><br>
+				</td>
+				<td >
+					<table>
+						<tr>
+							<td style="vertical-align:middle">Min price:</td><td><input class="input-mini text-right" type="text" ng-model="product.repricer.minPrice"> </td>
+						<tr>
+						</tr>
+							<td style="vertical-align:middle">Max price:</td><td><input class="input-mini text-right" type="text" ng-model="product.repricer.maxPrice"> </td>
+						<tr>
+						<tr>
+							<td colspan=2><label class="checkbox inline"><input ng-model="product.repricer.underLowest" type="checkbox">0.01 below</label></td>
+						</tr>
+					</table>
+				</td>
+				<td >
+					<table>
+						<tr>
+							<td style="vertical-align:middle">Current price: {{product.Price}}</td>
+						<tr>
+					</table>
+				</td>
+				<td >
+					<table>
+						<tr>
+							<td style="vertical-align:middle">
+								<label class="checkbox inline"><input ng-model="product.repricer.active" type="checkbox" ng-disabled="priceInvalid(product.repricer.minPrice)">Active</label>
+							</td>
+						<tr>
+						</tr>
+							<td style="vertical-align:middle"><button ng-click="saveRepriceConfig(product.SKU,product.repricer)" class="btn">Save</button></td>
+						</tr>
+					</table>
+				</td>
+				</tr></table>
+			</div>
+    </div>
+	</div>
+</div>

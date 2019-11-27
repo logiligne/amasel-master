@@ -1,0 +1,66 @@
+<div class="row">
+	<div class="span10">
+		<pagination num-pages="numPages(history)"
+								current-page="currentPage"
+								class="pagination-mini" style="text-align: center;">
+		</pagination>
+	</div>
+	<div class="span2">
+		<label class="checkbox inline"><input ng-model="detailed" type="checkbox">Show detailed history</label>
+	</div>
+</div>
+<div class="product-list" class="ng-cloak">
+	<div class="row-fluid" data-ng-repeat="row in rows">
+			<div class="product-reprice span12" ng-repeat="op in getColumns(history,currentPage,$index)">
+					<table >
+						<tr>
+				  		<th style="padding: 0 10px; text-align:center;" colspan=4>
+				  		Time : {{ op.time | date : 'medium'	}}  <span style="color:grey; padding-left: 20px;" >[[{{ op.time.toGMTString() }}]]</span>
+				  		</th>
+						</tr>
+						<tr>
+				  		<th style="padding: 0 10px;">
+					  	SKU
+					  	</th>
+							<th style="padding: 0 10px;">
+					  	New price
+					  	</th>
+					  	<th style="padding: 0 10px;">
+					  	Price change
+					  	</th>
+							<th style="padding: 0 10px;">
+					  	No change reason
+					  	</th>
+						</tr>
+						<tr data-ng-repeat="newPrice in op.newPrices">
+				  		<td style="padding: 0 10px;">
+					  		<a href="{{productURL(productsBySKU[newPrice.SKU].ASIN)}}" target="_blank">{{ newPrice.SKU }}</a><br>
+					  	</td>
+							<td style="padding: 0 10px;">
+					  	{{ newPrice.StandardPrice }}
+					  	</td>
+					  	<td style="padding: 0 10px;">
+					  	{{ op.deltaPrices[newPrice.SKU] || "Manual set"}}
+					  	</td>
+							<td style="padding: 0 10px;">
+								-
+							</td>
+					  </tr>
+						<tr data-ng-repeat="(sku, reason) in op.skippedRepricing" ng-show="detailed">
+				  		<td style="padding: 0 10px;">
+					  		<a href="{{productURL(productsBySKU[sku].ASIN)}}" target="_blank">{{ sku }}</a><br>
+					  	</td>
+							<td style="padding: 0 10px;">
+					  	-
+					  	</td>
+					  	<td style="padding: 0 10px;">
+					  	0
+					  	</td>
+							<td style="padding: 0 10px;">
+								{{ reason }}
+							</td>
+					  </tr>
+				  </table>
+			</div>
+	</div>
+</div>

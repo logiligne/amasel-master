@@ -1,0 +1,17 @@
+{
+  "name": "db-model",
+  "version": "1.0.0",
+  "authors": [
+    "Svetlozar Argirov <zarrro@gmail.com>"
+  ],
+  "description": "Amasel Database Model",
+  "main": "index.coffee",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

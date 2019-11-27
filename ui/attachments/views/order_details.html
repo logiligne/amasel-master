@@ -1,0 +1,38 @@
+<div style="padding:10px">
+<div style="max-height:400px;overflow: auto;">
+	
+	<table class="table" >
+		<tr style="font-size: x-small;">
+			<th>Item</th>
+			<th>
+				Shipped/Ordered<br>
+				SKU
+			</th>
+			<th>
+				Price<br>
+				Promo Discount
+			</th>
+			<th>Shipping Price</th>
+		</tr>
+
+		<tr ng-repeat="i in order.items ">
+			<td>
+				<img ng-src="{{pbySKU[i.SellerSKU].imageSmall}}">
+			</td>
+			<td>
+				<span style="color: grey">{{ i.QuantityShipped }}/</span>{{ i.QuantityOrdered }}<br>
+				SKU: {{ i.SellerSKU }}
+			</td>
+			<td>
+				{{ i.ItemPrice.Amount }} {{ i.ItemPrice.CurrencyCode }}<br>
+				<span style="color: grey">{{ i.PromotionDiscount.Amount }} {{ i.PromotionDiscount.CurrencyCode }}</span>
+			</td>
+			<td>{{ i.ShippingPrice.Amount }} {{ i.ShippingPrice.CurrencyCode }}</td>
+		</tr>
+
+	</table>
+</div>
+<div style="text-align: right;">
+		<button ng-click="close()" class="btn btn-small">Close</button>
+</div>
+</div>

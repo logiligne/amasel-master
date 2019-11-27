@@ -1,0 +1,50 @@
+<div class="row-fluid">
+	<div class="span5">
+		<div class="input-append">
+			<input class="input-medium" placeholder="Search..." type="text" ng-model="query" >
+			<button class="btn" ng-click="query = '' "><i class="icon-remove"></i></button>
+		</div>
+		<label class="checkbox inline"><input ng-model="searchInSKU" type="checkbox">SKU</label>
+		<label class="checkbox inline"><input ng-model="searchInASIN" type="checkbox">ASIN</label>
+		<label class="checkbox inline"><input ng-model="searchInTitle" type="checkbox">Title</label>
+	</div>
+	<div class="span4">
+	</div>
+	<div class="span3">
+		showing {{ getPage(filtered,currentPage).length }} out of {{ filtered.length }} total
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<pagination num-pages="numPages(filtered)"
+								current-page="currentPage"
+								class="pagination-mini" style="text-align: center;">
+		</pagination>
+	</div>
+</div>
+<div class="product-list">
+	<div class="row-fluid" data-ng-repeat="row in rows">
+			<div class="product-info span3" ng-repeat="product in getColumns(filtered,currentPage,$index)">
+				<div class="product-img-small left" >
+			 	 <img ng-src="{{product.imageSmall}}" alt="{{product.title}}">
+			  </div>
+				<div class="dropdown pull-right">
+				  <a class="dropdown-toggle"><i class="icon-tasks"></i></a>
+				  <ul class="dropdown-menu">
+				    <li >
+				      <a ng-click="addToPurchaseOrder(product.SKU,10)">Purchase 10</a>
+				      <a ng-click="addToPurchaseOrder(product.SKU,25)">Purchase 25</a>
+				      <a ng-click="addToPurchaseOrder(product.SKU,50)">Purchase 50</a>
+				    </li>
+				  </ul>
+				</div>
+
+				 ASIN: <a href="{{productURL(product.ASIN)}}" target="_blank">{{product.ASIN}}</a><br>
+				 SKU: <b>{{product.SKU}}</b><br>
+				 Quantity: <b>{{product.Quantity}}</b><br>
+				 Price: <b>{{product.Price}}</b><br>
+				 <div style="clear:both;">{{product.title}}</div>
+			</div>
+    </div>
+	</div>
+</div>

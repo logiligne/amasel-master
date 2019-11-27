@@ -1,0 +1,69 @@
+---
+- hosts: "{{ host }}"
+  remote_user: root
+  vars:
+   nvm_version: v0.25.0
+   iojs_version: v1.8.1
+   nvm_iojs_version_dir: ~/.nvm/versions/io.js/{{ iojs_version }}
+   couchdb_admin: admin
+   couchdb_admin_pass: t0xane6634
+   hostname: amasel.co
+  tasks:
+    - name: disable NetworkManager
+      service: name=NetworkManager enabled=no state=stopped
+    - name: set hostname
+      hostname: name={{ hostname }}
+    - name: set selinux to permissive
+      selinux: policy=targeted state=permissive
+    - name: install packages
+      yum: name={{ item }} state=latest
+      with_items:
+        - couchdb
+        - git
+        - python-httplib2
+        - gcc-c++
+    - name: enable couchdb
+      service: name=couchdb enabled=yes state=started
+    - name: check couchdb admin
+      action: uri url=http://localhost:5984/_session
+                  return_content=yes
+                  force_basic_auth=yes
+                  user={{couchdb_admin}}
+                  password={{couchdb_admin_pass}}
+                  status_code="200,401"
+      register: couchdb_session
+#    - name: debug2
+#      debug: msg="couchdb_session is {{ couchdb_session.content | from_json }} , {{ (couchdb_session.content | from_json).userCtx.name }}"
+    - name: create couchdb admin user
+      when: not (('userCtx' in (couchdb_session.content | from_json) ) and  ((couchdb_session.content | from_json).userCtx.name == couchdb_admin))
+      uri: url=http://localhost:5984/_config/admins/{{couchdb_admin}}
+                  method=PUT
+                  body='"{{couchdb_admin_pass}}"'
+    - name: require basic auth on couchdb
+      ini_file: dest=/etc/couchdb/local.ini
+                section=httpd
+                option=WWW-Authenticate
+                value='Basic realm="Amasel Helper"'
+    - name: make couchdb listen on 0.0.0.0
+      ini_file: dest=/etc/couchdb/local.ini
+                section=httpd
+                option=bind_address
+                value=0.0.0.0
+    - name: install nvm
+      shell: "curl https://raw.githubusercontent.com/creationix/nvm/{{nvm_version}}/install.sh | bash"
+      args:
+        creates: ~/.nvm/nvm.sh
+    - name: install iojs
+      shell: bash -ic "nvm install  iojs-{{iojs_version}} && nvm alias default iojs-{{iojs_version}}"
+      args:
+        creates: "{{nvm_iojs_version_dir}}/bin/node"
+    - name: install iojs packages
+      shell: bash -ic "npm install -g {{ item }}"
+      args:
+        creates: "{{nvm_iojs_version_dir}}/lib/node_modules/{{ item }}/package.json"
+      with_items:
+        - coffee-script
+        - bower
+        - grunt-cli
+    - name: checkout amasel
+      git: repo="git@bitbucket.org:zarrro/amasel.git" dest=/srv/amasel accept_hostkey=True

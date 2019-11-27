@@ -1,0 +1,29 @@
+{
+	"name": "Amasel-ui-ng",
+	"description": "Amasel web interface NG",
+	"version": "0.0.1",
+	"authors": [
+		"kaloyanm <kaloyan.mir4ev@gmail.com>",
+		"Svetlozar Argirov <zarrro@gmail.com>"
+	],
+	"private": true,
+	"dependencies": {
+		"DataTables": "~1.10.0",
+		"jquery": "~2.1.0",
+		"bootstrap": "~3.3.0",
+		"font-awesome": "~4.1.0",
+		"classnames": "",
+		"react": "~0.13.0",
+		"react-addons": "",
+		"react-paginate": "",
+		"react-bootstrap": "",
+		"hasher": "",
+		"crossroads": "",
+		"lodash": "",
+		"sb-admin-v2": "~0.1.0",
+		"pouchdb" : "",
+		"startbootstrap-simple-sidebar": "",
+		"collapsible": "",
+		"jscroll": ""
+	}
+}

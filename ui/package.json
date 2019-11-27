@@ -1,0 +1,23 @@
+{
+  "jam": {
+    "baseUrl": "attachments/js",
+    "dependencies": {
+      "angular-ui-bootstrap": "0.1.1-jam.3",
+      "angular-ui-jam": "0.3.2-jam.2",
+      "angular-sanitize": "1.0.4",
+      "angularjs": "1.0.6",
+      "modernizr": "",
+      "underscore": "",
+      "underscore.string": "",
+      "jquery": "2.0.0",
+      "select2": "3.2.0",
+      "couchr": "0.0.12",
+      "jsPDF": ""
+    },
+    "packageDir": "attachments/js/lib"
+  },
+  "dependencies": {
+    "bower": "^1.3.12",
+    "bower-requirejs": "^1.1.3"
+  }
+}

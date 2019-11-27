@@ -1,0 +1,10 @@
+{
+	"jam": {
+    "baseUrl": "attachments/js", 
+    "dependencies": {
+			"jquery":"",
+			"modernizr":""
+    }, 
+    "packageDir": "attachments/js/lib"
+	}
+}

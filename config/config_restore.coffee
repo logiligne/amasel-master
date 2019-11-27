@@ -1,0 +1,1 @@
+../worker/config_restore.coffee

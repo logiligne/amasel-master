@@ -1,0 +1,111 @@
+<div class="row-fluid">
+	<div class="span3">
+		<div class="input-append">
+			<input class="input-medium" placeholder="Search..." type="text" ng-model="query" >
+			<button class="btn" ng-click="query = '' "><i class="icon-remove"></i></button>
+		</div>
+	</div>
+	<div class="span3">
+		<select ui-select2 ng-model="filterByFlag" style="width:200px">
+	    <option ng-repeat="flag in flagFilters" value="{{flag}}">{{flag}}</option>
+	  </select>
+		<button class="btn btn-link" ng-click="refresh()"><i class="icon-refresh"></i></button>
+	</div>
+	<div class="span1">
+		<button class="btn" ng-click="printDialog()">Print</button>
+	</div>
+	<div class="span3">
+		Selection:<button class="btn" ng-click="confirmShipping()">Confirm Shipping</button>
+	</div>
+</div>
+<div class="row-fluid" ng-show="filtered.length > 0">
+	<div class="span1">
+	</div>
+	<div class="span9">
+		<pagination num-pages="numberOfPages"
+								current-page="currentPage"
+								class="pagination-small" style="display:inline;">
+		</pagination>
+	</div>
+	<div class="span2">
+		showing {{ getPage(filtered,currentPage).length }} out of {{ filtered.length }} total
+	</div>
+</div>
+
+<table class="table" ng-show="filtered.length > 0">
+	<tr>
+		<th>Summary</th>
+		<th>
+			<div class="row-fluid">
+				<div class="span8">
+					<input type="checkbox" ng-model="selectAllDummy"  name="print-select-all">
+					<input type="checkbox" ng-model="selectNoneDummy" name="print-select-all"> Address
+				</div>
+				<div class="span4">
+				</div>
+			</div>
+		</th>
+		<th>Amazon Order</th>
+	</tr>
+	<tr ng-repeat="o in getPage(filtered,currentPage)">
+		<td>
+			{{ o.PurchaseDate | date:'medium' }}<br>
+			Total: <b>{{ o.OrderTotal.Amount }}</b> {{ o.OrderTotal.CurrencyCode }}<br>
+			Unshipped items: <b>{{ o.NumberOfItemsUnshipped }}</b>
+		</td>
+		<td>
+			<div class="order-address">
+						<div class="order-address-actions">
+							<input type="checkbox" ng-model="selected[o.AmazonOrderId]" >
+							<span class="dropdown">
+							  <a class="dropdown-toggle">
+							   {{ o.BuyerName }}
+							  </a>
+							  <ul class="dropdown-menu">
+							    <li>
+							      <a class="email-link" href="mailto:{{ o.BuyerEmail }}"><i class="icon-envelope"></i>Send email</a>
+							    </li>
+							  </ul>
+							</span>
+						</div>
+						<div class="row-fluid">
+							<div class="order-address-text span8">
+								<b>
+								{{ o.ShippingAddress.Name }}<br>
+								<span ui-if="o.ShippingAddress.AddressLine1">{{ o.ShippingAddress.AddressLine1 }}<br></span>
+								<span ui-if="o.ShippingAddress.AddressLine2">{{ o.ShippingAddress.AddressLine2 }}<br></span>
+								<span ui-if="o.ShippingAddress.AddressLine3">{{ o.ShippingAddress.AddressLine3 }}<br></span>
+								{{ o.ShippingAddress.PostalCode}} {{ o.ShippingAddress.City }}<br>
+								{{ o.ShippingAddress.Country}}<br>
+								</b>
+							</div>
+							<div class="span4">
+								<select id="flags-{{o.AmazonOrderId}}" class="order-flags"
+										ui-select2 multiple data-placeholder="Add flags..."
+										ng-change="flagsChange(o)" ng-model="o.saveFlags">
+								    <option ng-repeat="flag in flags" value="{{flag}}">{{flag}}</option>
+								</select>
+							</div>
+						</div>
+			</div>
+		</td>
+		<td>
+			<div class="order-amazon-link"><a href="{{amazonOrderUrl}}{{o.AmazonOrderId}}" target="_blank">{{o.AmazonOrderId}}</a></div>
+			<ul class="order-short-list">
+				<li ng-repeat="i in o.items | limitTo:3">
+					<b>{{ i.QuantityOrdered }}</b> x SKU: <a href="{{productURL(i.ASIN)}}" target="_blank"><b>{{ i.SellerSKU }}</b></a>
+				</li>
+				<li ng-show="o.items.length <=3">
+					<button class="btn btn-mini btn-link" ng-click="orderDetails(o)">Details...</button>
+				</li>
+				<li ng-hide="o.items.length <=3">
+					<button class="btn btn-mini btn-link" ng-click="orderDetails(o)">Details for {{ o.items.length - 3 }} more...</button>
+				</li>
+			</ul>
+		</td>
+	</tr>
+</table>
+
+<div ng-show="filtered.length <= 0">
+	No results match your search
+</div>

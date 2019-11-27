@@ -1,0 +1,1 @@
+This is used to sync amazon MWS to couchdb.

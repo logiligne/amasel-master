@@ -1,0 +1,25 @@
+{
+  "name": "db-model",
+  "version": "1.0.0",
+  "description": "Amasel Database Model",
+  "main": "build/db-model.js",
+  "dependencies": {
+    "lodash": "^3.6.0",
+    "cli-table": ""
+  },
+  "devDependencies": {
+    "coffee-script": "^1.9.1",
+    "coffeeify": "",
+    "grunt": "",
+    "grunt-browserify": "",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.2.4",
+    "pouchdb": "^3.3.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Svetlozar Argirov <zarrro@gmail.com>"
+}

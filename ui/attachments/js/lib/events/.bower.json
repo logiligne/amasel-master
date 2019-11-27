@@ -1,0 +1,13 @@
+{
+  "name": "events",
+  "homepage": "https://github.com/caolan/events",
+  "_release": "d9c8c3115b",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d9c8c3115b64126475e4c3710f629479eafe1f50"
+  },
+  "_source": "https://github.com/caolan/events.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/caolan/events.git"
+}

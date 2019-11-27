@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html
+	class="no-js"
+	lang="en"
+	ng-controller="MainCtrl"
+>
+<head>
+	<meta charset="utf-8" />
+
+	<title ng:bind-template="{{nav.title}} | Amazon Seller Helper">Amazon Seller Helper</title>
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<link rel="stylesheet" href="css/bootstrap-combined.min.css" />
+	<link rel="stylesheet" href="css/app.css" />
+	<link rel="stylesheet" href="js/lib/select2/select2.css" />
+
+	<script src="js/lib/modernizr/modernizr.js"></script>
+</head>
+
+<body>
+    <div class="navbar no-print">
+	    <div class="navbar-inner">
+		    <a class="brand" href="#/"><i class="icon-home" style="margin-top:5px;"></i> Home</a>
+		    <ul class="nav">
+			    <li><a href="#/orders">Unshipped orders</a></li>
+			    <li><a href="#/products">Products</a></li>
+			    <li><a href="#/purchaseOrders">Purchase Order</a></li>
+			    <li><a href="#/reports">Billing reports</a></li>
+					<li class="dropdown">
+					  <a class="dropdown-toggle">
+							Repricer
+					  </a>
+					  <ul class="dropdown-menu">
+					    <li>
+					      <a href="#/repricerStatus">Status</a>
+					    </li>
+					    <li>
+					      <a href="#/repricerConfigure">Configure</a>
+					    </li>
+					  </ul>
+					</li>
+		    </ul>
+		    <ul class="nav pull-right">
+					<li>
+						<a><img src="img/ajax_loader.gif" ng-show="nav.inProgress"></a>
+					</li>
+					<li class="dropdown">
+					  <a class="dropdown-toggle">
+							Settings
+					  </a>
+					  <ul class="dropdown-menu">
+					    <li>
+					      <a href="#/screenSettings/"><i class="icon-list-alt"></i>Screen</a>
+					    </li>
+							<li>
+					      <a href="#/vatSettings/"><i class="icon-edit"></i>VAT</a>
+					    </li>
+							<li>
+					      <a href="#/fortuneCookieSettings/"><i class="icon-edit"></i>Fortune Cookie</a>
+					    </li>
+					    <li>
+					      <a href="#/printSettings/"><i class="icon-print"></i>Printing</a>
+					    </li>
+					  </ul>
+					</li>
+		    </ul>
+	    </div>
+    </div>
+		<img src="img/ajax_loader_big.gif" ng-show="nav.loadInProgress" class="loading-in-progress" id='loadInProgressSpinner'>
+		<div ng-view ng-hide="nav.loadInProgress">
+	 	</div>
+	<!-- // TODO: make a sane single file loading/pushing
+	     // This below works, couchapp needs work
+	<script src="js/require.js"></script>
+	<script>
+		if( window.location.host.match(/^(0\.0\.0\.0|127\.0\.0\.1|localhost)/) ){
+			require(['js/require.config'], function(){
+			});
+		} else {
+		  require(['js/main-built'], function(){
+				require(['main']);
+			});
+		}
+	</script>
+	-->
+	<script data-main="js/main" src="js/require.js"></script>
+	<script src="js/require.config.js"></script>
+	<script>
+		requirejs.onError = function(err) {
+			if(err.requireType == "notloaded" && err.message && err.message.indexOf('"source-map"') >=0 ){
+				// Ignore "source-map" errors, from handlebars
+				return;
+			}
+			console.error(err);
+			var spinner = document.getElementById("loadInProgressSpinner");
+			var msg = document.createElement("span");
+			msg.innerHTML = "There was error loading ,reload the page or some functionality may not work!";
+			msg.setAttribute('style', "color: red; font-size: xx-large;");
+			spinner.parentNode.replaceChild( msg, spinner)
+		}
+	</script>
+</body>
+</html>

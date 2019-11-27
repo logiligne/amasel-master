@@ -1,0 +1,22 @@
+{
+  "name": "amasel-sync",
+  "version": "0.0.1",
+  "engines": [
+    "node >= 0.8.19"
+  ],
+  "main": "worker.js",
+  "dependencies": {
+    "cli-table": "",
+    "colors": "",
+    "cron": "",
+    "csv": "~0.3.7",
+    "human-interval": "^0.1.5",
+    "iconv": "",
+    "mws-js": "git://github.com/zaro/mws-js.git#master",
+    "nano": "",
+    "underscore": "",
+    "winston": "",
+    "yargs": "^3.7.0"
+  },
+  "devDependencies": {}
+}

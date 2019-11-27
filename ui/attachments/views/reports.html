@@ -1,0 +1,91 @@
+<select
+		ui-select2 ng-change="setCurrent()" ng-model="currentIndex" style="width: 300px;">
+    <option ng-repeat="r in reports" value="{{$index}}">{{ r.startDate | date }} - {{ r.endDate | date }}</option>
+</select>
+
+<div style="height: 2em;" ></div>
+
+<div ng-show="current">
+	<table width="100%">
+		<tr>
+			<td colspan=3><hr></td>
+		</tr>
+
+		<tr>
+			<td><b>Number of items<b></td>
+			<td></td>
+			<td>{{ current.numItems  }}</td>
+		</tr>
+
+		<tr>
+			<td colspan=3><hr></td>
+		</tr>
+		
+		<tr>
+			<td><b>Anfangssaldo<b></td>
+			<td></td>
+			<td>{{ current.previousReserveAmount | number:2 }}</td>
+		</tr>
+
+		<tr>
+			<td colspan=3><hr></td>
+		</tr>
+
+		<tr>
+			<td><b>Seller fee<b></td>
+			<td></td>
+			<td>{{ current.subscriptionFee | number:2 }}</td>
+		</tr>
+
+		<tr>
+			<td colspan=3><hr></td>
+		</tr>
+
+		<tr>
+			<td width="30%"><b>Bestellungen</b></td>
+			<td width="30%">Artikelpreis</td>
+			<td width="30%">{{ current.itemsAmount | number:2 }}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Amazon-Gebuehren</td>
+			<td>{{ current.amazonFees | number:2 }}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Andere</td>
+			<td>{{ current.shippingAmount | number:2 }}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td colspan=2><hr></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><b>Gesamtsumme</b></td>
+			<td>{{ current.itemsAmount + current.shippingAmount + current.amazonFees | number:2 }}</td>
+		</tr>
+		<tr>
+			<td colspan=3><hr></td>
+		</tr>
+
+		<tr>
+			<td><b>Erstattungen<b></td>
+			<td><b>Gesamtsumme</b></td>
+			<td>{{ current.refundAmount | number:2 }}</td>
+		</tr>
+
+		<tr>
+			<td colspan=3><hr></td>
+		</tr>
+
+		<tr>
+			<td><b>Schlussbilanz<b></td>
+			<td><b>Gesamtsumme</b></td>
+			<td>{{ current.totalAmount | number:2 }}</td>
+		</tr>
+
+
+	</table>
+		
+</div>

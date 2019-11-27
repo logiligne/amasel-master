@@ -1,0 +1,11 @@
+
+.login-container {
+  margin-left:  auto;
+  margin-right: auto;
+	margin-top: 10%;
+  width: 400px;
+}
+
+#error_messages {
+	display : none;
+}

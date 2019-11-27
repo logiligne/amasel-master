@@ -1,0 +1,39 @@
+{
+  "name": "amasel-ui",
+  "description": "Amasel web interface",
+  "version": "0.1.0",
+  "homepage": "",
+  "copyright": "Svetlozar Argirov",
+  "dependencies": {
+  	"angular" : "1.0.6",
+  	"angular-bootstrap": "0.1.0",
+  	"angular-sanitize" : "1.0.6",
+    "angular-ui" : "0.3.2",
+  	"modernizr" : "",
+    "underscore": "",
+    "underscore.string" : "",
+    "jquery":"2.0.0",
+    "select2":"3.2.0",
+    "couchr" :"https://github.com/caolan/couchr.git#b679bc51abc71792496562f7479eec876d1b42c3",
+    "events" :"https://github.com/caolan/events.git",
+    "pdfmake": "https://github.com/zaro/pdfmake.git#master",
+    "bower-pdfkit" : "0.7.0",
+    "handlebars" : ""
+
+  },
+  "devDependencies": {
+    "assert": "*",
+    "blanket": "*"
+  },
+  "ignore": [
+    "test",
+    "example",
+    "lib",
+    "Gruntfile.js",
+    "package.json",
+    "grunt"
+  ],
+  "requirejs": {
+    "config": "attachments/js/lib/require.config.js"
+  }
+}

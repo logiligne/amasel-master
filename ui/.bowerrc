@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "postinstall": "bash -c './node_modules/.bin/bower-requirejs -c attachments/js/require.config.js ; sed -i s/couchr-node/couchr-browser/ attachments/js/require.config.js'"
+  },
+  "directory" : "attachments/js/lib/"
+}

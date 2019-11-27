@@ -1,0 +1,20 @@
+<div class="row-fluid no-print">
+	<div class="span9"></div>
+	<div class="span1"><button class="btn" ng-click="print()">Print</button></div>
+	<div class="span2"><button class="btn" ng-click="deleteAll()">Delete all</button></div>
+</div>
+<div class="row-fluid" data-ng-repeat="row in rows">
+		<div class="product-info-purchase-order span2" ng-repeat="o in getColumns(ordered,$index)">
+			<button ng-click="setQuantity(o.SKU,0)" class="no-print close product-delete-order">&times;</button>
+		 	<div class="product-img-order">
+			 	<img ng-src="{{o.item.imageSmall}}" alt="{{o.item.title}}">
+			</div>
+			<div class="product-opts-order">
+				<b ng-hide="o._editing" ng-dblclick="startEdit(o)">{{o.Quantity}}</b>
+				<input ng-show="o._editing" type="number" class="input-mini" ng-model="o._Quantity" ui-keypress="{'enter':'saveEdit(o)', 'esc':'cancelEdit(o)'}">
+				<br>
+				<span class="no-print product-info-order">SKU: {{o.SKU}}<br>
+				Amazon qtty: {{o.item.Quantity}}</span>
+			</div>
+		</div>
+</div> 

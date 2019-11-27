@@ -1,0 +1,278 @@
+<ul class="nav nav-tabs">
+	<li ng-class="{active: currentPage=='profiles'}">
+		<a href="#/printSettings/profiles">Print profiles</a>
+	</li>
+	<li ng-class="{active: currentPage=='page'}">
+		<a href="#/printSettings/page">Page setup</a>
+	</li>
+	<li ng-class="{active: currentPage=='template'}">
+		<a href="#/printSettings/template">Print template</a>
+	</li>
+	<li ng-class="{active: currentPage=='templateImages'}">
+		<a href="#/printSettings/templateImages">Images</a>
+	</li>
+	<!--
+	<li ng-class="{active: currentPage=='labels'}">
+		<a href="#/printSettings/labels">Labels page setup</a>
+	</li>
+	<li ng-class="{active: currentPage=='labelContent'}">
+		<a href="#/printSettings/labelContent">Label</a>
+	</li>
+	<li ng-class="{active: currentPage=='labelWatermark'}">
+		<a href="#/printSettings/labelWatermark">Label watermark</a>
+	</li>
+	<li ng-class="{active: currentPage=='order'}">
+		<a href="#/printSettings/order">Order</a>
+	</li>
+	-->
+</ul>
+
+<div ng-show="currentPage=='profiles'" class="row-fluid">
+	<div class="span3">
+		<div class="well">
+			Here you can create profile, set the current one and delete profiles.
+		</div>
+	</div>
+	<div class="span6">
+		<div class="well">
+			Current profile:
+				<select ui-select2 ng-model="currentPrintProfile" class="print-profile-select" ng-change="setCurrentProfile(currentPrintProfile)">
+					<option ng-repeat="(name,value) in printProfiles" value="{{name}}">{{name}}</option>
+				</select>
+				<br>
+				<div>{{printProfiles[currentPrintProfile].comment}}</div>
+
+	    <ul class="nav nav-list">
+	    	<li class="divider"></li>
+			</ul>
+			<form class="form-horizontal">
+				<input class="input-medium" placeholder="Profile name ..." type="text" ng-model="newProfileName" >
+				<input class="input-large" placeholder="Profile description ..." type="text" ng-model="newProfileComment" >
+				<button class="btn" ng-click="createProfile()" ng-disabled="newProfileName.length == 0">Create</button>
+			</form>
+			<div ng-repeat="(name,value) in printProfiles" class="media">
+				<button class="btn pull-right" ng-click="deleteProfile(name)">Delete</button>
+			  <div class="media-body">
+			 	 <h4 class="media-heading">{{name}}</h4>
+				 {{value.comment}}
+			 	</div>
+			</div>
+		</div>
+	</div>
+	<div class="span3">
+	</div>
+</div>
+
+<div ng-show="currentPage=='page'" class="row-fluid">
+	<div class="span3">
+		<div>
+			<button class="btn" ng-click="templatePreview()">Preview</button>
+			<button class="btn" ng-click="savePageOptions()">Save</button>
+		</div>
+		<br>
+		<div class="well">
+			Adjust the physical page size using the controls on the right.
+		</div>
+	</div>
+	<div class="span6">
+		<div class="well">
+			Current profile: <b>{{currentPrintProfile}}</b>
+		    <ul class="nav nav-list">
+		    	<li class="divider"></li>
+				</ul>
+			<div id="print-page-options"></div>
+		</div>
+	</div>
+	<div class="span3">
+	</div>
+</div>
+
+<div ng-show="currentPage=='template'" class="row-fluid">
+	<div class="span3">
+		<div>
+			<button class="btn" ng-click="templatePreview()">Preview</button>
+			<button class="btn" ng-click="saveTemplate()">Save</button>
+			<br>
+		</div>
+		<br>
+		<div class="well" ng-non-bindable>
+			Use the editor to customize the way a label is printed.
+			You can use the following placeholders, which are pretty self explanatory:<br>
+			<br>
+			{{ShippingAddress.Name}}<br>
+			{{ShippingAddress.Phone}}<br>
+			{{ShippingAddress.AddressLines}}<br>
+			{{ShippingAddress.AddressLine1}}<br>
+			{{ShippingAddress.AddressLine2}}<br>
+			{{ShippingAddress.AddressLine3}}<br>
+			{{ShippingAddress.PostalCode}}<br>
+			{{ShippingAddress.City}}<br>
+			{{ShippingAddress.StateOrRegion}}<br>
+			{{ShippingAddress.CountryCode}}<br>
+			{{ShippingAddress.Country}}<br>
+		</div>
+	</div>
+	<div class="span6">
+		<textarea id="label-content" ng-model="printTemplateInput"></textarea>
+	</div>
+	<div class="span3">
+	</div>
+</div>
+
+<div ng-show="currentPage=='templateImages'" class="row-fluid">
+	<div class="span3">
+		<div>
+			<button class="btn" ng-click="saveImages()">Save</button>
+			<br>
+		</div>
+		<br>
+		<div class="well" ng-non-bindable>
+			Upload images to be used in the Print Template
+		</div>
+	</div>
+	<div class="span6">
+		<form>
+		Image name:
+		<input  id='newImageName'/><br>
+		Image file:
+		<input type='file' id='newImageFile' /><br>
+		<br>
+		<button class="btn" ng-click="loadImage()">Load</button>
+		</form>
+		<br>
+		<div ng-repeat="(name, dataUrl) in printTemplate.images">
+			<hr>
+			<div>
+				Name: <b>{{name}}</b>
+				<button ng-click="deleteImage(name)" class="close">Delete</button>
+			</div>
+			<img ng-src="{{dataUrl}}">
+		</div>
+	</div>
+	<div class="span3">
+	</div>
+</div>
+
+<!--
+<div ng-show="currentPage=='labels'" class="row-fluid">
+	<div class="span3">
+		<div>
+			<form class="form-horizontal">
+				Font size: <input class="input-small" type="text" ng-model="labelsOptions.fontSize" ><br>
+			</form>
+			<br>
+			<button class="btn" ng-click="labelsPreview()">Preview</button>
+			<button class="btn" ng-click="saveLabelsOptions()">Save</button>
+		</div>
+		<br>
+		<div class="well">
+			Adjust the label size and the spacing between labels using
+			the controls on the right. Also below it you can set the padding inside
+			the label which should be left blank.
+		</div>
+	</div>
+	<div class="span6">
+		<div class="well">
+			Current profile: <b>{{currentPrintProfile}}</b>
+		    <ul class="nav nav-list">
+		    	<li class="divider"></li>
+				</ul>
+			<div id="print-labels-options"></div>
+		</div>
+	</div>
+	<div class="span3">
+	</div>
+</div>
+<div ng-show="currentPage=='labelContent'" class="row-fluid">
+	<div class="span3">
+		<div>
+			<button class="btn" ng-click="labelsPreview()">Preview</button>
+			<button class="btn" ng-click="saveLabelsTemplate()">Save</button>
+			<br>
+		</div>
+		<br>
+		<div class="well" ng-non-bindable>
+			Use the editor to customize the way a label is printed.
+			You can use the following placeholders, which are pretty self explanatory:<br>
+			<br>
+			{{ShippingAddress.Name}}<br>
+			{{ShippingAddress.Phone}}<br>
+			{{ShippingAddress.AddressLines}}<br>
+			{{ShippingAddress.AddressLine1}}<br>
+			{{ShippingAddress.AddressLine2}}<br>
+			{{ShippingAddress.AddressLine3}}<br>
+			{{ShippingAddress.PostalCode}}<br>
+			{{ShippingAddress.City}}<br>
+			{{ShippingAddress.StateOrRegion}}<br>
+			{{ShippingAddress.CountryCode}}<br>
+			{{ShippingAddress.Country}}<br>
+		</div>
+	</div>
+	<div class="span6">
+		<textarea id="label-content" ng-model="labelsTemplate"></textarea>
+	</div>
+	<div class="span3">
+		Inline preview:
+		<div ng-bind-html="labelContentPreview" class="well" style="text-align: {{labelsOptions.labelTextAlign}}"></div>
+	</div>
+</div>
+<div ng-show="currentPage=='labelWatermark'" class="row-fluid">
+	<div class="span3">
+		<div>
+			<button class="btn" ng-click="labelsPreview()">Preview</button>
+			<button class="btn" ng-click="saveLabelWatermark()">Save</button>
+			<br>
+		</div>
+		<br>
+		<div class="well" ng-non-bindable>
+			Use the editor to upload and configure a watermark printed on each label
+		</div>
+	</div>
+	<div class="span6">
+		<form>
+		Image file:
+		<input type='file' id='watermarkImgFile' /><br>
+		<br>
+		<button class="btn" ng-click="loadWatermark()">Load</button>
+		<button class="btn" ng-click="removeWatermark()">Remove</button>
+		</form>
+		<br>
+		Position:
+		<div>
+			<label class="radio inline"><input ng-model="labelWatermark.position" value="TopLeft" type="radio" name="_ign">Top Left</label>
+			<label class="radio inline"><input ng-model="labelWatermark.position" value="TopRight" type="radio" name="_ign">Top Right</label>
+			<br>
+			<label class="radio inline"><input ng-model="labelWatermark.position" value="BottomLeft" type="radio" name="_ign">Bottom Left</label>
+			<label class="radio inline"><input ng-model="labelWatermark.position" value="BottomRight" type="radio" name="_ign">Bottom Right</label>
+		</div>
+		<br>
+		<div>
+			Width: <input class="input-small" type="text" ng-model="labelWatermark.width" >
+			Height: <input class="input-small" type="text" ng-model="labelWatermark.height" >
+		</div>
+		<br>
+		<canvas id="watermarkCanvas"></canvas>
+	</div>
+	<div class="span3">
+	</div>
+</div>
+<div ng-show="currentPage=='order'" class="row-fluid">
+	<div class="span3">
+		<div>
+			<button class="btn" ng-click="orderPreview()">Preview</button>
+			<button class="btn" ng-click="saveOrderTemplate()">Save</button>
+		</div>
+		<br>
+		<div class="well" ng-non-bindable>
+			Use the editor to customize the way a order is printed.
+			You can use the following placeholders:<br>
+			<br>
+			{{ShippingAddress.Country}}<br>
+			.... more
+		</div>
+	</div>
+	<div class="span9">
+		<textarea id="order-content" ng-model="orderTemplate"></textarea>
+	</div>
+</div>
+-->

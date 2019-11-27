@@ -1,0 +1,14 @@
+{
+  "name": "angular-ui",
+  "homepage": "https://github.com/angular-ui/angular-ui",
+  "version": "0.3.2",
+  "_release": "0.3.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.3.2",
+    "commit": "2625cc16bc104a30b18209e42c3c22d0c3a11c1e"
+  },
+  "_source": "git://github.com/angular-ui/angular-ui.git",
+  "_target": "0.3.2",
+  "_originalSource": "angular-ui"
+}

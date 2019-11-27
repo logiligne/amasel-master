@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Amasel</title>
+
+	<link href="lib.css" rel="stylesheet">
+	<link href="app.css" rel="stylesheet">
+	<script src="lib.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+	<!-- Sidebar -->
+	<div id="sidebar-wrapper">
+		<ul class="sidebar-nav">
+			<li class="sidebar-brand"><a href="#">Amasel Software</a></li>
+			<li>
+				<a href="#/"><i class="glyphicon glyphicon-shopping-cart"></i> Products</a>
+			</li>
+			<li>
+				<a href="#/repricer"><i class="glyphicon glyphicon-cog"></i> Repricer</a>
+			</li>
+			<li>
+				<a href="#/repricer/history"><i class="glyphicon glyphicon-list-alt"></i> Repricer History</a>
+			</li>
+			<li>
+				<a href="#/settings" class="collapsible collapsible-close">
+					<i class="glyphicon glyphicon-wrench"></i> Settings
+				</a>
+				<ul class="nav ">
+					<li><a href="#/settings/screen"><i class="glyphicon glyphicon-new-window"></i> Screen</a></li>
+					<li><a href="#/settings/vat"><i class="glyphicon glyphicon-euro"></i> Vat</a></li>
+					<li><a href="#/settings/printing"><i class="glyphicon glyphicon-print"></i> Printing</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<!-- /#sidebar-wrapper -->
+
+	<!-- Page Content -->
+	<div id="page-content-wrapper">
+		<div class="container-fluid" id="react-topnav"></div>
+		<div class="container-fluid">
+			<div class="row" id="react-router-path"></div>
+		</div>
+	</div>
+	<!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+	<script type="text/javascript">
+	$ = jQuery = require('jquery');
+	bootstrap = require('bootstrap');
+	collapsible = require('collapsible');
+
+	$(function() {
+		var wrapperPad = $('#wrapper').css('padding-left');
+  		$('.dropdown-toggle').dropdown();
+		$('.collapsible').collapsible({speed: 100});
+
+		// left menu
+		$('#menu-switch').click(function () {
+			$('#sidebar-wrapper').toggle(100, function() {
+				var hidden = $(this).hasClass('hidden');
+				if (hidden) {
+					$('#wrapper').css('padding-left', wrapperPad);
+					$(this).removeClass('hidden');
+				} else {
+					$('#wrapper').css('padding-left', '0');
+					$(this).addClass('hidden');
+				}
+			});
+		});
+  	});
+	</script>
+	<script src="app.js"></script>
+</body>
+</html>
